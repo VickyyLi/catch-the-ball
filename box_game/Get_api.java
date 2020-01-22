@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -113,7 +114,11 @@ public class Get_api {
         }
         return null;
     }
-    
+    /**
+     * connect the api, input the image file and output the position data in json format.
+     * @param file: image file get from the ball_fallen.
+     * @return player_pos: json format
+     */
     public static String get_player_pos(File file) throws InterruptedException{
     	byte[] buff = getBytesFromFile(file);
         String url = "https://api-us.faceplusplus.com/humanbodypp/v1/skeleton";

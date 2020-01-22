@@ -17,17 +17,34 @@ public class Ball {
 		speedy = size/6;
 		color = new Color(rand.nextInt(226)+30, rand.nextInt(226)+30, rand.nextInt(226)+30);
 	}
-	
+    /**
+     * draw the ball on the graphics.
+     * @param g: the graphics to paint on.
+     */
 	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillOval(x, getY(), size, size);
 		y = getY() + speedy;//move down
 	}
-
+    /**
+     * get the position on y.
+     * @return the vertical ordinate of ball.
+     */
 	public int getY() {
 		return y;
 	}
+    /**
+     * get the position on x.
+     * @return the horizontal ordinate of ball.
+     */
 	public int getX() {
 		return x;
+	}
+    /**
+     * get the size of the ball.
+     * @return the random size of the ball.
+     */
+	public int getSize() {
+		return size;
 	}
 }

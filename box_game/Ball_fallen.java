@@ -30,16 +30,32 @@ public class Ball_fallen{
 	Graphics g;
 	List<Ball> data;
 	List<player> players;
-	Color color;
-	public Ball_fallen(List<Ball> data,List<player> players, Graphics g, Color color) {
+	static double count;
+	static int score;
+	public Ball_fallen(List<Ball> data,List<player> players, Graphics g, Integer score,Double count) {
 		this.data = data;
 		this.g = g;
-		this.color=color;
 		this.players=players;
+		this.score=score;
+		this.count=count;
 	}
-	public void fallen_ball() {//get fallen ball every 1000ms
+	public static double getCount() {
+		return count;
+	}
+	public static int getScore() {
+		return score;
+	}
+    /**
+     * paint the little man, balls, score and timer on the graphics, and stop the thread 1 while the counter(timer*10) equals to 275,
+     *  and other two thread counter(timer*10) equals to 300.
+     * @return score: get the score of the player.
+     */
+	public int fallen_ball() {
 		timer.schedule(new TimerTask() {
 		    public void run(){
+				if(count>=275.0) {
+					this.cancel();
+				}
 		    	int number = rand.nextInt(10);
 		    	if(number>=0 && number<=2){number=0;}
 		    	else if(number >=3 && number <=6) {number = 1;}
@@ -51,7 +67,7 @@ public class Ball_fallen{
 					Ball b = new Ball(x,y);
 					data.add(b);
 					if(flag==true) {
-						Run r  = new Run(data,players,g,color);
+						Run r  = new Run(data,players,g,score);
 						r.start();
 						flag=false;
 					}
@@ -59,9 +75,16 @@ public class Ball_fallen{
 		    }
 	      }, 100, 100);
 		timer.schedule(new TimerTask() {
+
 	    	String path="C:\\Users\\vicky\\Desktop\\java project\\camera_pics\\camera.png";
 	    	File file1=new File(path);
 	    	public void run(){
+				if(count>=300.0) {
+					timer.cancel();
+					this.cancel();
+		            System.gc();
+		            cancel();
+				}
 		    	try {
 		    		/*BufferedImage bi = ImageIO.read(file1);
 					int width = bi.getWidth();
@@ -75,10 +98,12 @@ public class Ball_fallen{
 						JSONArray jsonary = (JSONArray) jsonobj.get("skeletons");
 						for (int i = 0; i < Math.min(jsonary.length(),2); i++) {  
 							JSONObject object = jsonary.getJSONObject(i);
-				            System.out.println(object);
+				            //System.out.println(object);
 				            JSONObject body_landmark = object.getJSONObject("landmark");
 				    		JSONObject head = body_landmark.getJSONObject("head");
-				    		int head_pos=(1920-(head.getInt("x")*(1920/160))-(1920/2))*2;
+				    		int head_pos=(1920-(head.getInt("x")*(1920/80)));
+				    		//System.out.println("headpos");
+				    		//System.out.println(head_pos);
 				    		if(head_pos<0) {
 				    			head_pos=0;
 				    		}
@@ -86,7 +111,7 @@ public class Ball_fallen{
 				    			head_pos=1920;
 				    		}				            
 				            
-				            player person = new player(head_pos,body_landmark,color);
+				            player person = new player(head_pos,body_landmark);
 				            if(first_time==true) {
 				            	players.add(person);
 				            	first_time=false;
@@ -105,6 +130,7 @@ public class Ball_fallen{
 	    }, 5, 100);
 	    timer.schedule(new TimerTask() {
 	    	public void run(){
+	    		count=count+1;
 	    		Webcam webcam = Webcam.getDefault();
 	    		webcam.open();
 	    		Date date = new Date();
@@ -115,7 +141,13 @@ public class Ball_fallen{
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				if(count>=300.0) {
+					webcam.close();
+					timer.cancel();
+					Main_program.game_over();
+				}
 	    	}
 	    }, 0, 100);
+	    return score;
 	}
 }
