@@ -8,4 +8,4 @@ In this project, I developed a body sensing game, called catch the ball. To get 
 ***Privacy Policy Reminder:***
 The camera of your laptop will be used to detect your head position, so please make sure your camera is available and is allowed to be called by the program. The latest image will be stored at the "java project\camera pics", and won't be automatically deleted after the game.
 
-If you want to know more details about the game, please reder to [introduction video](https://github.com/VickyyLi/catch-the-ball/blob/master/intro_video.mp4) and [report](https://github.com/VickyyLi/catch-the-ball/blob/master/report.pdf)
+If you want to know more details about the game, please refer to [introduction video](https://github.com/VickyyLi/catch-the-ball/blob/master/intro_video.mp4) and [report](https://github.com/VickyyLi/catch-the-ball/blob/master/report.pdf)
